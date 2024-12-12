@@ -1,9 +1,12 @@
-import Title from "@/components/Title";
+import CustomAnimatedTitle from "@/components/ui/CustomAnimatedTitle";
 
 export default function Home() {
   return (
     <div>
-      <Title />
+      <CustomAnimatedTitle
+        text="1Qr"
+        className="w-full max-w-7xl"
+      />
     </div>
   );
 }

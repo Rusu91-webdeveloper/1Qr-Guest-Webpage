@@ -1,5 +1,18 @@
 import type { Config } from "tailwindcss";
 
+function extractColorVars(
+  colorObj: Record<string, any>,
+  colorGroup = ""
+): Record<string, string> {
+  return Object.entries(colorObj).reduce((vars, [key, value]) => {
+    const newVars =
+      typeof value === "string"
+        ? { [`--${colorGroup}${key}`]: value }
+        : extractColorVars(value, `${colorGroup}${key}-`);
+    return { ...vars, ...newVars };
+  }, {});
+}
+
 const config: Config = {
   content: [
     "./pages/**/*.{js,ts,jsx,tsx,mdx}",
@@ -17,19 +30,6 @@ const config: Config = {
   },
   plugins: [
     function ({ addBase, theme }) {
-      function extractColorVars(colorObj, colorGroup = "") {
-        return Object.keys(colorObj).reduce((vars, colorKey) => {
-          const value = colorObj[colorKey];
-
-          const newVars =
-            typeof value === "string"
-              ? { [`--${colorGroup}${colorKey}`]: value }
-              : extractColorVars(value, `${colorGroup}${colorKey}-`);
-
-          return { ...vars, ...newVars };
-        }, {});
-      }
-
       addBase({
         ":root": extractColorVars(theme("colors")),
       });

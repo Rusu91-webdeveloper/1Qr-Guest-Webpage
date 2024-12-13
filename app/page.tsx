@@ -1,6 +1,6 @@
 import CustomAnimatedTitle from "@/components/ui/CustomAnimatedTitle";
 
-export default async function Home() {
+export default function Home() {
   return (
     <div>
       <CustomAnimatedTitle
